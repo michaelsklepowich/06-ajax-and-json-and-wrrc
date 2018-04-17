@@ -39,20 +39,18 @@ Article.loadAll = articleData => {
   articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
   articleData.forEach(articleObject => Article.all.push(new Article(articleObject)))
-  console.log(Article.all);
 }
 
 // REVIEW: This function will retrieve the data from either a local or remote source, and process it, then hand off control to the View.
 Article.fetchAll = () => {
-  console.log('fetchAll called');
   // REVIEW: What is this 'if' statement checking for? Where was the rawData set to local storage?
   if (localStorage.rawData) {
 
     Article.loadAll();
 
   } else {
-      console.log('fetchAll inside else');
       return $.getJSON('data/hackeripsum.json')
       .then((data) => Article.loadAll(data))
+      .catch(err => {return err});
       }
   }

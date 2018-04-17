@@ -121,5 +121,6 @@ articleView.initIndexPage = () => {
   });})
   .then( () => {
     articleView.afterLoad();
-  });
+  })
+  .catch(err => {console.log(err + ' error caught')});
 };
