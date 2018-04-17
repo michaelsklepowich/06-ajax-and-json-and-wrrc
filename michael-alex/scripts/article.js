@@ -33,9 +33,9 @@ Article.prototype.toHtml = function() {
 // REVIEW: This function will take the rawData, how ever it is provided, and use it to instantiate all the articles. This code is moved from elsewhere, and encapsulated in a simply-named function for clarity.
 
 // COMMENT: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
-// PUT YOUR RESPONSE HERE
+// 
 Article.loadAll = articleData => {
-  //console.log(articleData);
+  console.log(articleData);
   articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
   articleData.forEach(articleObject => Article.all.push(new Article(articleObject)))
@@ -49,7 +49,7 @@ Article.fetchAll = () => {
     Article.loadAll();
 
   } else {
-      return $.getJSON('data/hackeripsum.json')
+      return $.getJSON('./data/hackerIpsum.json')
       .then((data) => Article.loadAll(data))
       .catch(err => {return err});
       }

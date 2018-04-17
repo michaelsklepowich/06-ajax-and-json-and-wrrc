@@ -106,21 +106,27 @@ articleView.create = () => {
   $('#article-json').val(`${JSON.stringify(article)},`);
 };
 
+articleView.save = () => {
+  localStorage.setItem('articles', JSON.stringify(Article.all));
+}
+
 articleView.afterLoad = () => {
   articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
   articleView.handleMainNav();
   articleView.setTeasers();
+  articleView.save();
 }
 
 articleView.initIndexPage = () => {
-  Article.fetchAll().then( () => {
+  Article.fetchAll()
+  .then( () => {
   Article.all.forEach(article => {
     $('#articles').append(article.toHtml())
   });})
   .then( () => {
     articleView.afterLoad();
   })
-  .catch(err => {console.log(err + ' error caught')});
+  .catch(err => {console.log('Error: ', err)});
 };
