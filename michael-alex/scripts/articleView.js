@@ -111,6 +111,9 @@ articleView.save = () => {
 }
 
 articleView.afterLoad = () => {
+  Article.all.forEach(article => {
+    $('#articles').append(article.toHtml())
+  });
   articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
@@ -120,13 +123,13 @@ articleView.afterLoad = () => {
 }
 
 articleView.initIndexPage = () => {
-  Article.fetchAll()
-  .then( () => {
-  Article.all.forEach(article => {
-    $('#articles').append(article.toHtml())
-  });})
-  .then( () => {
+  let result = Article.fetchAll();
+  if (result === false){
     articleView.afterLoad();
-  })
-  .catch(err => {console.log('Error: ', err)});
+  }
+  else{ result.then( () => {
+      articleView.afterLoad();
+    })
+    .catch(err => {console.log('Error: ', err)});
+  }
 };
